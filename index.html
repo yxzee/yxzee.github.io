@@ -3,17 +3,1314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Index Page</title>
+    <title>Strong & Fit</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
+        /* Update font import */
+        @import url('https://fonts.googleapis.com/css2?family=Copse&family=Fugaz+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+        /* Reset and general styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2c3e50;
+            --accent-yellow: #f1c40f;
+            --light-grey: #f5f6fa;
+            --dark-grey: #2f3640;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-grey);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--accent-yellow);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Update menu button styles */
+        .menu-btn {
+            position: absolute;
+            left: 1.5rem;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1;
+        }
+
+        .menu-btn span {
+            position: relative;
+            top: -3px;
+            left: -4px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .menu-btn::after {
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .menu-btn:hover span,
+        .menu-btn.active:hover::after {
+            transform: scale(1.2);
+        }
+
+        .menu-btn.active span {
+            display: none;
+        }
+
+        .menu-btn.active::after {
+            content: '×';
+            display: block;
+        }
+
+        .book-btn {
+            position: absolute;
+            right: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .book-btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            top: -100vh;
+            left: 20px;
+            width: auto;
+            min-width: 200px;
+            height: auto;
+            background: white;
+            transition: top 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            border-radius: 5px;
+        }
+
+        .sidebar.active {
+            top: 80px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            color: var(--dark-grey);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: bold;
+            box-shadow: none;
+            text-shadow: none;
+            font-size: 1.2rem;
+        }
+
+        .sidebar a:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .sidebar a:last-child {
+            border-radius: 0 0 5px 5px;
+        }
+
+        .sidebar a:hover {
+            background: var(--light-grey);
+            animation: menuPulse 1s infinite;
+        }
+
+        @keyframes menuPulse {
+            0% {
+                box-shadow: 0 0 0 rgba(0,0,0,0);
+                text-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                text-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+            100% {
+                box-shadow: 0 0 0 rgba(0,0,0,0);
+                text-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+        }
+
+        /* Main sections */
+        section {
+            padding: 4rem 0;
+            min-height: 100vh;
+        }
+
+        #hero {
+            position: relative;
+            padding: 70px 0 0 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 66%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
             text-align: center;
-            padding: 50px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .quote-container {
+            position: relative;
+            min-height: 200px; /* Set minimum height to prevent layout shifts */
+        }
+
+        .quote-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .quote-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Update quote styling */
+        .quote {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .author {
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            font-style: italic;
+            font-size: 1.5rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Trainers section */
+        #trainers {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background: var(--dark-grey);
+            padding: 2rem 0 0 0; /* Keep padding only at top */
+        }
+
+        .section-title {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Alfa Slab One', cursive;
+            letter-spacing: 2px;
+        }
+
+        /* Packages section */
+        #packages {
+            display: flex;
+            gap: 2rem;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .package-card {
+            flex: 1;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .package-card.basic {
+            background: #e1e4ea; /* Darker light grey */
+            color: var(--dark-grey);
+        }
+
+        .package-card.standard {
+            background: #7f8fa6; /* Medium grey */
+            color: white;
+        }
+
+        .package-card.premium {
+            background: var(--dark-grey);
+            color: var(--accent-yellow);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .trainer-cards-container {
+                flex-direction: column;
+            }
+
+            #packages {
+                flex-direction: column;
+                padding: 4rem 1rem;
+            }
+
+            .package-card {
+                margin-bottom: 2rem; /* Add spacing between stacked cards */
+            }
+
+            .package-card:last-child {
+                margin-bottom: 0; /* Remove margin from last card */
+            }
+
+            .navbar {
+                grid-template-columns: 80px 1fr 80px;
+            }
+            
+            .logo {
+                height: 70px;
+            }
+
+            .menu-btn {
+                padding-left: 1rem;
+            }
+
+            .book-btn {
+                margin-right: 1rem;
+            }
+
+            .trainer-characters {
+                flex-direction: column;
+            }
+
+            .trainer-character:first-child::after {
+                /* Change vertical divider to horizontal for mobile */
+                width: 100%;
+                height: 2px;
+                right: 0;
+                bottom: 0;
+                top: auto;
+            }
+
+            .trainer-character img {
+                max-height: 50vh; /* Limit height on mobile */
+            }
+        }
+
+        /* Add footer styles */
+        footer {
+            background: var(--accent-yellow);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-left a {
+            color: var(--dark-grey);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .footer-left a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-left a::before {
+            content: none;
+        }
+
+        .footer-left a {
+            gap: 8px;
+        }
+
+        .footer-left .email::before {
+            content: none;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-right a {
+            color: var(--dark-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover {
+            color: var(--primary-blue);
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+        }
+
+        /* Update Instagram icon styles */
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            fill: var(--dark-grey);
+            transition: fill 0.3s;
+        }
+
+        .footer-left a:hover .instagram-icon {
+            fill: var(--primary-blue);
+        }
+
+        /* Update email icon styles */
+        .email-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            fill: var(--dark-grey);
+            transition: fill 0.3s;
+        }
+
+        .footer-left a:hover .email-icon {
+            fill: var(--primary-blue);
+        }
+
+        /* Update video container styling */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem auto 0;
+            cursor: pointer;
+        }
+
+        .success-text .video-container {
+            margin: 1rem auto 0 0;
+        }
+
+        .trainer-video {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Add play button styling */
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 20px;
+            border-color: transparent transparent transparent var(--primary-blue);
+            margin-left: 4px;
+        }
+
+        .video-container:hover .play-button {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-container.playing .play-button {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Add carousel styling */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Update scroll prompt styles */
+        .scroll-prompt {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .scroll-prompt span {
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid white;
+            border-right: 2px solid white;
+            transform: rotate(45deg);
+            margin: -10px;
+            animation: scrollPrompt 2s infinite;
+        }
+
+        .scroll-prompt span:nth-child(2) {
+            animation-delay: -0.2s;
+        }
+
+        .scroll-prompt span:nth-child(3) {
+            animation-delay: -0.4s;
+        }
+
+        @keyframes scrollPrompt {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) translate(-20px, -20px);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) translate(20px, 20px);
+            }
+        }
+
+        .scroll-prompt.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Update Success Stories section styling */
+        #success-stories {
+            background: var(--light-grey);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 2rem;
+        }
+
+        #success-stories .section-title {
+            color: var(--dark-grey);
+            font-style: italic;
+        }
+
+        #success-stories .video-container {
+            max-width: 350px; /* Reduced from 400px */
+            width: 90%;
+        }
+
+        #success-stories .success-video {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Update success story text positioning */
+        .success-text {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-text .upper-left {
+            position: absolute;
+            left: -200px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-grey);
+            font-size: 1.2rem;
+            white-space: nowrap;
+        }
+
+        .success-text .lower-right {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-grey);
+            font-size: 2rem;
+            white-space: nowrap;
+            margin-left: 2rem; /* Add some spacing from video */
+        }
+
+        /* Add mobile responsiveness for the text */
+        @media (max-width: 768px) {
+            .success-text .upper-left,
+            .success-text .lower-right,
+            .bottom-text {  /* Added bottom-text to the list of hidden elements */
+                display: none;
+            }
+        }
+
+        .bottom-text {
+            margin-top: 2rem;
+            color: var(--dark-grey);
+            font-size: 1.5rem;
+        }
+
+        .no-text {
+            text-decoration: none;
+        }
+
+        /* Update side text styles */
+        .side-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .success-text .lower-right {
+            margin-top: 40%;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-grey);
+            font-size: 2rem;
+            white-space: nowrap;
+            margin-left: 2rem;
+        }
+
+        /* These two fr */
+        .hidden-image {
+            display: none;
+            background-image: url('drakenjosh.jpg');
+        }
+
+        /* Hero book button styles (currently unused) */
+        /*.hero-book-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            margin-top: 2rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.4rem;
+            text-decoration: none;
+            min-width: 250px;
+        }
+
+        .hero-book-btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }*/
+
+        /* Add animation styles */
+        .animation-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+            padding: 8px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--dark-grey);
+        }
+
+        .animation-selector:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        /* Update package card animations */
+        #packages .package-card {
+            opacity: 0;
+            transform: scale(0.5) rotate(-10deg);
+            transition: all 0.8s ease;
+        }
+
+        #packages .package-card.animate-in {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+
+        #packages .package-card.animate-out {
+            opacity: 0;
+            transform: scale(0.5) rotate(-10deg);
+        }
+
+        #packages .package-card:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        #packages .package-card:nth-child(3) {
+            transition-delay: 0.4s;
+        }
+
+        /* Update trainer character styles */
+        .trainer-characters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trainer-character {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--dark-grey);
+            transform: translateX(0);
+            transition: transform 0.8s ease, background 0.3s ease;
+            min-width: 50%;
+        }
+
+        .trainer-character.slide-left {
+            transform: translateX(-100%);
+        }
+
+        .trainer-character.slide-right {
+            transform: translateX(100%);
+        }
+
+        .trainer-character:hover {
+            background: var(--accent-yellow); /* Change to yellow on hover */
+        }
+
+        .trainer-character:first-child::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: white;
+        }
+
+        .trainer-character img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 0;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 0 transparent);
+        }
+
+        .trainer-character:hover img {
+            transform: scale(1.02);
+            filter: drop-shadow(0 0 4px white) 
+                    drop-shadow(0 0 4px white) 
+                    drop-shadow(0 0 4px white) 
+                    drop-shadow(0 0 4px white) 
+                    drop-shadow(0 0 4px white); /* Five shadows for stronger effect */
+        }
+
+        /* Update trainer name styles */
+        .trainer-name {
+            position: absolute;
+            color: white;
+            font-size: 2.5rem;
+            font-family: 'Bangers', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease, transform 0.8s ease;
+            letter-spacing: 2px; /* Added for Bangers font */
+        }
+
+        .name-first {
+            top: 22%;
+            left: 8%;
+        }
+
+        .name-last {
+            top: 22%;
+            right: 8%;
+        }
+
+        .trainer-character:hover .trainer-name {
+            transform: scale(1.1);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .trainer-character.slide-left .trainer-name,
+        .trainer-character.slide-right .trainer-name {
+            transform: translateX(0); /* Keep names with their panels */
+        }
+
+        /* Update success stories title and text styling */
+        #success-stories .section-title {
+            color: var(--dark-grey);
+            font-style: italic;
+        }
+
+        .side-text div {
+            font-weight: normal;
+        }
+
+        .side-text div strong {
+            font-weight: bold;
+        }
+
+        .no-text {
+            text-decoration: none;
+        }
+
+        /* Update trainer info panel styles */
+        .trainer-info {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--dark-grey);
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            display: flex;
+        }
+
+        .trainer-info.left {
+            left: 0;
+        }
+
+        .trainer-info.right {
+            right: 0;
+        }
+
+        .trainer-info.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .trainer-info-left {
+            flex: 1;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .before-after-carousel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .before-after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            object-fit: cover;
+        }
+
+        .before-after-image.active {
+            opacity: 1;
+        }
+
+        .image-toggle {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-yellow);
+            color: var(--dark-grey);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.5rem;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .image-toggle:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .trainer-info-right {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .trainer-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .trainer-info p {
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Add Instagram link styles */
+        .trainer-info .instagram-link {
+            margin-top: 1rem;
+            color: var(--accent-yellow);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .trainer-info .instagram-link:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>Testing the page difference</p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <button class="menu-btn"><span>☰</span></button>
+        <img src="logo.png" alt="Logo" class="logo">
+        <a href="#packages" class="book-btn">Reshape Yourself</a>
+    </nav>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <a href="#hero">Home</a>
+        <a href="#trainers">Our Trainers</a>
+        <a href="#success-stories">Succeed With Us</a>
+        <a href="#packages">Packages</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="carousel">
+            <div class="carousel-slide active" style="background-image: url('both1.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('draketraining1.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('hero3.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('hero4.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('hero5.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('hero6.jpg')"></div>
+        </div>
+        <div class="hero-content">
+            <div class="quote-container">
+                <div class="quote-wrapper active">
+                    <div class="quote">Don't count the days, make the days count.</div>
+                    <div class="author">– Muhammad Ali</div>
+                </div>
+                <div class="quote-wrapper">
+                    <div class="quote">It's not about perfect. It's about effort.</div>
+                    <div class="author">– Jillian Michaels</div>
+                </div>
+                <div class="quote-wrapper">
+                    <div class="quote">Your struggles develop your strengths.</div>
+                    <div class="author">– Arnold Schwarzenegger</div>
+                </div>
+                <div class="quote-wrapper">
+                    <div class="quote">No excuses.</div>
+                    <div class="author">– Kobe Bryant</div>
+                </div>
+                <div class="quote-wrapper">
+                    <div class="quote">Discipline, that's all it is.</div>
+                    <div class="author">– David Goggins</div>
+                </div>
+                <div class="quote-wrapper">
+                    <div class="quote">The body achieves what the mind believes.</div>
+                    <div class="author">– Napoleon Hill</div>
+                </div>
+            </div>
+            <!-- <a href="#packages" class="hero-book-btn">Book Now</a> -->
+        </div>
+        <div class="scroll-prompt">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Trainers Section -->
+    <section id="trainers">
+        <h2 class="section-title">Choose Your Trainer</h2>
+        <div class="trainer-characters">
+            <div class="trainer-character">
+                <div class="trainer-name name-first">Joshua</div>
+                <div class="trainer-name name-last">Weeks</div>
+                <img src="joshcompleted.png" alt="Josh">
+            </div>
+            <div class="trainer-info left">
+                <div class="trainer-info-left">
+                    <div class="before-after-carousel">
+                        <img src="joshbefore.jpg" alt="Josh Before" class="before-after-image active">
+                        <img src="joshafter.jpg" alt="Josh After" class="before-after-image">
+                        <button class="image-toggle">Show After</button>
+                    </div>
+                </div>
+                <div class="trainer-info-right">
+                    <h2>Joshua Weeks</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <a href="https://www.instagram.com/week_lifts" target="_blank" class="instagram-link">@week_lifts</a>
+                </div>
+            </div>
+            <div class="trainer-character">
+                <div class="trainer-name name-first">Drake</div>
+                <div class="trainer-name name-last">Bolander</div>
+                <img src="drakecompleted.png" alt="Drake">
+            </div>
+            <div class="trainer-info right">
+                <div class="trainer-info-left">
+                    <div class="before-after-carousel">
+                        <img src="drakebefore.jpg" alt="Drake Before" class="before-after-image active">
+                        <img src="drakeafter.jpg" alt="Drake After" class="before-after-image">
+                        <button class="image-toggle">Show After</button>
+                    </div>
+                </div>
+                <div class="trainer-info-right">
+                    <h2>Drake Bolander</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <a href="https://www.instagram.com/_drakefitness_" target="_blank" class="instagram-link">@_drakefitness_</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Update Success Stories Section -->
+    <section id="success-stories">
+        <h2 class="section-title">Nothing is Impossible</h2>
+        <div class="success-text">
+            <div class="video-container">
+                <video class="success-video">
+                    <source src="success.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="play-button"></div>
+            </div>
+            <div class="lower-right side-text right">
+                <div><span class="no-text">No</span> matter the <strong>weight</strong></div>
+                <div><span class="no-text">No</span> matter the <strong>age</strong></div>
+                <div><span class="no-text">No</span> matter the <strong>size</strong></div>
+                <div><span class="no-text">No</span> matter the <strong>goals</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages">
+        <div class="package-card basic">
+            <h1>Basic Package</h1>
+            <p>Description of basic package...</p>
+        </div>
+        <div class="package-card standard">
+            <h1>Standard Package</h1>
+            <p>Description of standard package...</p>
+        </div>
+        <div class="package-card premium">
+            <h1>Premium Package</h1>
+            <p>Description of premium package...</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            <a href="https://www.instagram.com/strongandfittraining/" target="_blank">
+                <svg class="instagram-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                Strong and Fit Instagram
+            </a>
+            <a href="mailto:strongandfit@gmail.com" class="email">
+                <svg class="email-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                strongandfit@gmail.com
+            </a>
+        </div>
+        <div class="footer-right">
+            Created by <a href="https://kro.nz" target="_blank"><b><u>Isaac Kronz</u></b></a>
+        </div>
+    </footer>
+
+    <script>
+        // Update menu button click handler
+        const menuBtn = document.querySelector('.menu-btn');
+        menuBtn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Update outside click handler
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const menuBtn = document.querySelector('.menu-btn');
+            
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                menuBtn.classList.remove('active');
+            }
+        });
+
+        // Update smooth scroll for navigation links with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Remove menu close on link click
+                // document.querySelector('.sidebar').classList.remove('active');
+                // document.querySelector('.menu-btn').classList.remove('active');
+            });
+        });
+
+        // Add video play functionality
+        document.querySelectorAll('.video-container').forEach(container => {
+            const video = container.querySelector('video');
+            
+            container.addEventListener('click', function() {
+                if (video.paused) {
+                    video.play();
+                    container.classList.add('playing');
+                } else {
+                    video.pause();
+                    container.classList.remove('playing');
+                }
+            });
+
+            // Show play button when video ends
+            video.addEventListener('ended', function() {
+                container.classList.remove('playing');
+                video.currentTime = 0;
+            });
+        });
+
+        // Update carousel functionality to include quotes
+        function startCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const quoteWrappers = document.querySelectorAll('.quote-wrapper');
+            let currentSlide = 0;
+
+            setInterval(() => {
+                // Remove active classes
+                slides[currentSlide].classList.remove('active');
+                quoteWrappers[currentSlide].classList.remove('active');
+
+                // Update current slide
+                currentSlide = (currentSlide + 1) % slides.length;
+
+                // Add active classes
+                slides[currentSlide].classList.add('active');
+                quoteWrappers[currentSlide].classList.add('active');
+            }, 5000); // Change every 5 seconds
+        }
+
+        // Start carousel when page loads
+        window.addEventListener('load', startCarousel);
+
+        // Add scroll prompt functionality
+        function handleScrollPrompt() {
+            const scrollPrompt = document.querySelector('.scroll-prompt');
+            let hasScrolled = false;
+            let promptTimer;
+
+            // Listen for any scroll
+            window.addEventListener('scroll', () => {
+                hasScrolled = true;
+                if (scrollPrompt.classList.contains('show')) {
+                    scrollPrompt.classList.remove('show');
+                }
+            }, { once: true });
+
+            // Show prompt if no scroll after 6 seconds
+            promptTimer = setTimeout(() => {
+                if (!hasScrolled) {
+                    scrollPrompt.classList.add('show');
+                }
+            }, 6000);
+        }
+
+        // Start scroll prompt handler when page loads
+        window.addEventListener('load', handleScrollPrompt);
+
+        // Add intersection observer for package animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const cards = entry.target.querySelectorAll('.package-card');
+                
+                if (entry.isIntersecting) {
+                    cards.forEach(card => {
+                        card.classList.add('animate-in');
+                        card.classList.remove('animate-out');
+                    });
+                } else {
+                    cards.forEach(card => {
+                        card.classList.remove('animate-in');
+                        card.classList.add('animate-out');
+                    });
+                }
+            });
+        }, {
+            threshold: 0.2 // Trigger when 20% of the section is visible
+        });
+
+        // Observe the packages section
+        observer.observe(document.querySelector('#packages'));
+
+        // Update click handlers for trainer panels
+        const trainerContainer = document.querySelector('.trainer-characters');
+        const trainers = document.querySelectorAll('.trainer-character');
+
+        trainerContainer.addEventListener('click', (e) => {
+            const clickedPanel = e.target.closest('.trainer-character');
+            const infoPanels = document.querySelectorAll('.trainer-info');
+            
+            if (clickedPanel) {
+                const index = Array.from(trainers).indexOf(clickedPanel);
+                
+                if (!clickedPanel.classList.contains(index === 0 ? 'slide-left' : 'slide-right')) {
+                    trainers.forEach(panel => {
+                        panel.classList.remove('slide-left', 'slide-right');
+                    });
+                    infoPanels.forEach(panel => {
+                        panel.classList.remove('show');
+                    });
+                    
+                    if (index === 0) {
+                        clickedPanel.classList.add('slide-left');
+                        infoPanels[0].classList.add('show');
+                    } else {
+                        clickedPanel.classList.add('slide-right');
+                        infoPanels[1].classList.add('show');
+                    }
+                }
+            } else {
+                trainers.forEach(panel => {
+                    panel.classList.remove('slide-left', 'slide-right');
+                });
+                infoPanels.forEach(panel => {
+                    panel.classList.remove('show');
+                });
+            }
+        });
+
+        // Update before/after image toggle functionality
+        document.querySelectorAll('.before-after-carousel').forEach(carousel => {
+            const images = carousel.querySelectorAll('.before-after-image');
+            const toggleBtn = carousel.querySelector('.image-toggle');
+            let showingBefore = true;
+
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent click from bubbling up to trainer container
+                images.forEach(img => img.classList.toggle('active'));
+                showingBefore = !showingBefore;
+                toggleBtn.textContent = showingBefore ? 'Show After' : 'Show Before';
+            });
+        });
+    </script>
 </body>
 </html>
