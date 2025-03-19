@@ -985,6 +985,49 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Add mobile styles for trainer info */
+        @media (max-width: 768px) {
+            .trainer-info {
+                position: absolute;
+                width: 100%;
+                height: auto;
+                background: var(--dark-grey);
+                display: block;
+                padding: 2rem;
+            }
+
+            .trainer-info-left {
+                display: none; /* Hide before/after carousel on mobile */
+            }
+
+            .trainer-info-right {
+                width: 100%;
+                padding: 0;
+            }
+
+            .trainer-info.right.show {
+                margin-top: 28rem;
+            }
+
+            .trainer-info.show {
+                margin-top: 2rem;
+            }
+
+            .trainer-character {
+                min-width: 100%; /* Ensure full width on mobile */
+            }
+
+            .trainer-characters {
+                flex-direction: column;
+                gap: 2rem; /* Add gap between stacked trainers */
+            }
+
+            /* Remove the divider on mobile */
+            .trainer-character:first-child::after {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
