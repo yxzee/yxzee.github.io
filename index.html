@@ -312,12 +312,41 @@
             font-size: 1.1rem;
         }
 
-        .package-card h1 {
+        .package-card .title-section {
+            position: relative;
+            padding: 0 2rem;
             margin-bottom: 1.5rem;
         }
 
-        .package-card h2 {
+        .package-card .title-section::before,
+        .package-card .title-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: currentColor;
+            opacity: 0.3;
+        }
+
+        .package-card .title-section::before {
+            left: 0;
+        }
+
+        .package-card .title-section::after {
+            right: 0;
+        }
+
+        .package-card h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+        }
+
+        .package-card .price {
+            font-size: 1.4rem;
             margin-bottom: 1.5rem;
+            opacity: 0.9;
         }
 
         .package-card h3 {
@@ -1197,36 +1226,40 @@
     <!-- Packages Section -->
     <section id="packages">
         <div class="package-card basic">
-            <h1>Tier 1 | $100/month</h1>
-            <h2>Online Coaching</h2>
+            <div class="title-section">
+                <h1>Basic Training</h1>
+                <div class="price">$100/month</div>
+            </div>
+            <h3>Online Coaching</h3>
             <ul>
-                <li>Access to exercise video library</li>
-                <li>Custom training program</li>
+                <li>Customized training program</li>
                 <li>Personalized macronutrient breakdown</li>
+                <li>Access to our exercise video library</li>
             </ul>
         </div>
         <div class="package-card standard">
-            <h1>Tier 2 | Starting at $250/month</h1>
-            <h2>Online + In-Person Coaching</h2>
+            <div class="title-section">
+                <h1>Advanced Coaching</h1>
+                <div class="price">Starting at $250/month</div>
+            </div>
+            <h3>Online + In-Person Coaching</h3>
             <ul>
-                <li>Everything included in Tier 1</li>
+                <li><i>Includes all of Basic tier</i></li>
                 <li>One 1-hour in-person coaching session per week</li>
                 <li>Blood pressure and heart rate tracking</li>
                 <li>Exclusive access to lectures on the science of muscle growth, strength development, and performance optimization</li>
             </ul>
-            <h3>Session Add-Ons:</h3>
-            <ul>
-                <li>Add a second session per week: +$50/session</li>
-                <li>Add a third session per week: +$45/session</li>
-                <li>Add a fourth session per week: +$40/session</li>
-            </ul>
         </div>
         <div class="package-card premium">
-            <h1>Tier 3 | Tier 2 Package + $100/month</h1>
-            <h2>Elite Coaching</h2>
+            <div class="title-section">
+                <h1>Complete Nutrition</h1>
+                <div class="price">$100/month</div>
+            </div>
+            <h3>Add-On to Basic or Advanced</h3>
             <ul>
-                <li>Everything in Tier 2</li>
-                <li>Customized, in-depth meal planning tailored to your goals, preferences, and lifestyle</li>
+                <li>In-depth meal planning</li>
+                <li>Dieting for cutting, bulking, or recomposition</li>
+                <li>Tailored to your goals, preferences, and lifestyle</li>
             </ul>
         </div>
     </section>
