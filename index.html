@@ -279,6 +279,8 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .package-card.basic {
@@ -287,13 +289,13 @@
         }
 
         .package-card.standard {
-            background: #7f8fa6; /* Medium grey */
-            color: white;
+            background: var(--dark-grey);
+            color: var(--accent-yellow);
         }
 
         .package-card.premium {
-            background: var(--dark-grey);
-            color: var(--accent-yellow);
+            background: #7f8fa6; /* Medium grey */
+            color: white;
         }
 
         .package-card:hover {
@@ -303,6 +305,7 @@
         }
 
         .package-card ul {
+            flex: 1;
             list-style: none;
             padding: 0;
         }
@@ -352,6 +355,44 @@
         .package-card h3 {
             margin-top: 2rem;
             margin-bottom: 1rem;
+        }
+
+        .join-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 2rem;
+            background: var(--accent-yellow);
+            color: var(--dark-grey);
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .package-card.basic .join-button {
+            background: var(--dark-grey);
+            color: white;
+        }
+
+        .package-card.standard .join-button {
+            background: var(--accent-yellow);
+            color: var(--dark-grey);
+        }
+
+        .package-card.premium .join-button {
+            background: #e1e4ea;
+            color: var(--dark-grey);
+        }
+
+        .join-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         /* Mobile responsiveness */
@@ -1080,6 +1121,20 @@
                 display: none;
             }
         }
+
+        @media (min-width: 769px) {
+            .package-card.standard {
+                transform: scale(1.05);
+                margin-top: -10px;
+                margin-bottom: -10px;
+                z-index: 2;
+            }
+
+            /* Adjust hover effect for middle card */
+            .package-card.standard:hover {
+                transform: translateY(-5px) scale(1.07);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1236,6 +1291,9 @@
                 <li>Personalized macronutrient breakdown</li>
                 <li>Access to our exercise video library</li>
             </ul>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSduyoUdatTiwB2JD3NfaAYqz7MoEA6JIN_9Rlr6ABtKFxAomw/viewform?usp=pp_url&entry.718512922=Basic+Training:+Online" class="join-button" target="_blank">
+                Join Us
+            </a>
         </div>
         <div class="package-card standard">
             <div class="title-section">
@@ -1249,6 +1307,9 @@
                 <li>Blood pressure and heart rate tracking</li>
                 <li>Exclusive access to lectures on the science of muscle growth, strength development, and performance optimization</li>
             </ul>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSduyoUdatTiwB2JD3NfaAYqz7MoEA6JIN_9Rlr6ABtKFxAomw/viewform?usp=pp_url&entry.718512922=Advanced+Coaching:+Online+%2B+In-Person" class="join-button" target="_blank">
+                Join Us
+            </a>
         </div>
         <div class="package-card premium">
             <div class="title-section">
@@ -1261,6 +1322,9 @@
                 <li>Dieting for cutting, bulking, or recomposition</li>
                 <li>Tailored to your goals, preferences, and lifestyle</li>
             </ul>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSduyoUdatTiwB2JD3NfaAYqz7MoEA6JIN_9Rlr6ABtKFxAomw/viewform?usp=pp_url&entry.1632510875=Yes" class="join-button" target="_blank">
+                Join Us
+            </a>
         </div>
     </section>
 
